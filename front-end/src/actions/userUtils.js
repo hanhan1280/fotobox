@@ -26,6 +26,18 @@ export const addFriend = async (userId, setError) => {
     }
 };
 
+export const deleteFriend = async (userId, setError) => {
+    try {
+        let { data } = await axios.delete(`/api/user/delete/${userId}`);
+        console.log(data.msg);
+    } catch (err) {
+        setError({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    }
+};
+
 export const getFriendImgs = async (userId, setError) => {
     try {
         let { data } = await axios.get(`/api/user/friends/getImages/${userId}`);

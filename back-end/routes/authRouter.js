@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 router.post("/signup", (req, res, next) => {
     passport.authenticate("signup", function (err, user, info) {
         if (err || !user) {
-            return res.status(400).json({ email: "Email already exists" });
+            return res.status(400).json(info);
         }
         return res.json(user);
     })(req, res, next);
@@ -18,7 +18,7 @@ router.post("/login", (req, res, next) => {
             return res.status(400).json(err);
         }
         if (!user) {
-            return res.status(404).json({ emailnotfound: "Email not found" });
+            return res.status(404).json(info);
         }
         req.logIn(user, { session: false }, function (err) {
             if (err) {

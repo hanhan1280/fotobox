@@ -1,5 +1,6 @@
 const Image = require("../models/Image");
 const User = require("../models/User");
+const cloudinary = require('cloudinary').v2;
 
 const getImages = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ const getImages = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 };
 
@@ -22,6 +23,7 @@ const uploadImage = async (req, res) => {
         let image = {
           description: req.body[`desc${i}`],
           url: file.path,
+          cloudinaryId: file.filename
         }
         images.push(image);
       })
@@ -42,7 +44,7 @@ const uploadImage = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 };
 
@@ -50,12 +52,14 @@ const deleteImage = async (req, res) => {
   try {
     if (req.user) {
       await User.updateOne({ _id: req.user._id }, { $pullAll: { images: [req.params.imageid] } })
-      await Image.deleteOne({ _id: req.params.imageid });
+      let image = await Image.findById(req.params.imageid);
+      await cloudinary.uploader.destroy(image.cloudinaryId);
+      await Image.findByIdAndDelete(req.params.imageid);
       return res.status(200).json({ msg: "image deleted" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 }
 
@@ -67,11 +71,11 @@ const getFriends = async (req, res) => {
       friends.forEach(friend => {
         friend = { _id: friend._id, name: friend._name, email: friend._email }
       });
-      return res.status(200).json({ friends, msg: "image info fetched" });
+      return res.status(200).json({ friends, msg: "friends fetched" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 }
 
@@ -89,7 +93,9 @@ const getFriendImgs = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({
+      msg: error
+    });
   }
 }
 
@@ -105,8 +111,19 @@ const addFriend = async (req, res) => {
       }
     }
   } catch (error) {
+    return res.status(500).json({ msg: error });
+  }
+}
+
+const rmFriends = async (req, res) => {
+  try {
+    if (req.user) {
+      await User.updateOne({ _id: req.user._id }, { $pullAll: { friends: [req.params.userId] } })
+      return res.status(200).json({ msg: "friend removed" });
+    }
+  } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 }
 
@@ -127,7 +144,7 @@ const getAllUsers = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "some error occured" });
+    return res.status(500).json({ msg: error });
   }
 }
 
@@ -137,6 +154,7 @@ module.exports = {
   uploadImage,
   deleteImage,
   getFriends,
+  rmFriends,
   getFriendImgs,
   getAllUsers,
   addFriend

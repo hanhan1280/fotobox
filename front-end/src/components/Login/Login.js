@@ -3,7 +3,6 @@ import { loginUser } from "../../actions/authUtils";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { ErrorContext } from "../../contexts/ErrorContext";
-import { GET_ERRORS } from "../../actions/types";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
@@ -26,7 +25,7 @@ const Login = () => {
     if (auth.isAuthenticated) {
       history.push('/dashboard');
     }
-  }, [error, auth.isAuthenticated]);
+  }, [error, auth.isAuthenticated, history]);
 
   return (
     <div className="container">

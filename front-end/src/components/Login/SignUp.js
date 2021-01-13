@@ -16,14 +16,15 @@ const SignUp = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        signupUser(formData, setErrors, history);
+        signupUser(formData, setError, history);
     }
 
     useEffect(() => {
+        if (error) setErrors(error);
         if (auth.isAuthenticated) {
             history.push('/dashboard');
         }
-    });
+    }, [error, auth.isAuthenticated, history]);
 
     return (
         <div className="container">

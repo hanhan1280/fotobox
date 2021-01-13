@@ -9,8 +9,7 @@ import Upload from "../Images/Upload";
 
 const Dashboard = () => {
     const { auth, dispatch } = useContext(UserContext);
-    const { error, setError } = useContext(ErrorContext);
-    const [errors, setErrors] = useState(error);
+    const { setError } = useContext(ErrorContext);
     const [imgList, setImgList] = useState([]);
     const [images, setImages] = useState([]);
 
@@ -21,21 +20,21 @@ const Dashboard = () => {
 
     useEffect(() => {
         getImages(setError).then(imgs => setImgList(imgs));
-    }, []);
+    }, [setError]);
 
     return (
         <div className="container valign-wrapper">
             <div className="row" style={{ marginTop: 40 }}>
                 <div className="landing-copy col s12 center-align">
                     <h4>
-                        <b>Hey there,</b> {auth.user.name}
+                        <b className="grey-text text-darken-3">Hey there,</b> {auth.user.name}
                         <p className="flow-text grey-text text-darken-1" style={{ marginTop: 40 }}>
                             Let's upload some{" "}
-                            <span style={{ fontFamily: "monospace" }}>IMAGES</span> 👏
+                            <span style={{ fontFamily: "monospace" }}>IMAGES</span> 📂
                         </p>
                     </h4>
                     <div className="row">
-                        <ImageList imgList={imgList} setImgList={setImgList} />
+                        <ImageList imgList={imgList} setImgList={setImgList} deletable={true}/>
                         <Upload images={images} setImages={setImages} setImgList={setImgList} imgLen={imgList.length} />
                     </div>
                     <div className="row">
@@ -46,10 +45,10 @@ const Dashboard = () => {
                                 marginTop: "1rem"
                             }}
                             onClick={onLogout}
-                            className="white btn-flat btn-large waves-effect"><i className="material-icons left">keyboard_backspace</i>
+                            className="btn-flat waves-effect"><i className="material-icons left">keyboard_backspace</i>
                             Logout
                         </button>
-                        <Link to="/friends" className="btn-flat btn-large white waves-effect" style={{
+                        <Link to="/friends" className="btn-flat waves-effect" style={{
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
                             marginTop: "1rem"

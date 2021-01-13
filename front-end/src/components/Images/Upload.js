@@ -1,53 +1,86 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import { ErrorContext } from "../../contexts/ErrorContext";
 import { useDropzone } from "react-dropzone";
 import { uploadImages, getImages } from '../../actions/imageUtils';
 
 
+
+const baseStyle = {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '20px',
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: '#eeeeee',
+    borderStyle: 'dashed',
+    backgroundColor: '#fafafa',
+    color: '#e0e0e0',
+    outline: 'none',
+    transition: '.24s ease-in-out'
+};
+
+const acceptStyle = {
+    borderColor: '#00b0ff',
+    backgroundColor: '#e1f5fe',
+    color: '#64b5f6'
+}
+
+const errorStyle = {
+    borderColor: '#ef5350',
+    backgroundColor: '#ffebee',
+    color: '#e57373'
+}
+
 const Upload = props => {
-    const { error, setError } = useContext(ErrorContext);
+    const { setError } = useContext(ErrorContext);
     const { images, setImages, setImgList, imgLen } = props;
+    const [errors, setErrors] = useState(null);
 
     const onDrop = (files) => {
-        console.log(files);
-        if (files.length > 1)
-            setImages([...files]);
-        else
-            setImages([...images, files[0]]);
+        if (images.length + files.length > 10) {
+            setErrors("File Limit is 10");
+        }
+        else {
+            setErrors(null);
+            setImages([...images, ...files]);
+        }
     }
 
-    const files = images.map(image => (
-        <li key={image.path}>{image.path}</li>
-    ));
+    const remove = (key) => {
+        setImages(images.filter((img, i) => (i !== key)));
+    }
 
+    const files = images.map((image,i) => (
+        <li key={image.path} className="valign-wrapper" style={{ marginLeft: 25, flexDirection: "row" }}>
+            <i className="material-icons grey-text text-lighten-1">image</i>
+            <span onClick={()=>remove(i)} className="grey-text text-darken-3" style={{ margin: "5px", fontWeight: 500 }}>{image.path}</span>
+            {(image.size / 1048576).toFixed(2)} mb
+        </li>
+    ));
 
     const {
         getRootProps,
-        getInputProps
+        getInputProps,
     } = useDropzone({
         accept: 'image/jpeg, image/jpg, image/png',
         maxFiles: 10,
         onDrop
     });
 
-    const style = {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
-        borderWidth: 2,
-        borderRadius: 10,
-        borderColor: `${images.length > 0 ? '#00b0ff' : '#eeeeee'}`,
-        borderStyle: 'dashed',
-        backgroundColor: `${images.length > 0 ? '#e1f5fe' : '#fafafa'}`,
-        color: '#757575',
-        outline: 'none',
-    };
+    const style = useMemo(() => ({
+        ...baseStyle,
+        ...(images.length > 0 ? acceptStyle : {}),
+        ...(errors ? errorStyle : {})
+    }), [
+        errors,
+        images,
+    ]);
+
     const onUpload = async e => {
         e.preventDefault();
         const formData = new FormData();
-        images.map((file, i) => {
+        images.forEach((file, i) => {
             formData.append("picture", file, file.name);
             formData.append(`desc${i}`, file.name);
         });
@@ -57,25 +90,27 @@ const Upload = props => {
     }
 
     return (
-        <div className={`col s12${imgLen > 0 ? 'm6 l3' : ''}`}>
-            <form noValidate onSubmit={onUpload} className="card">
+        <div className={`col s12 ${imgLen > 0 ? 'm6 l3' : ''}`}>
+            <form noValidate onSubmit={onUpload} className="card" style={{ borderRadius: 10 }}>
                 <div className="input-field file-field col s12" style={{ paddingLeft: "11.250px" }}>
                     <div {...getRootProps({ style })}>
                         <input {...getInputProps()} />
-                        <h6>
-                            <p>
-                                Click/Drag to upload Files 📂
-                        </p>
-                        </h6>
-                        <ul>{files}</ul>
+                        <div className="center-align">
+                            <i className={`material-icons medium`}
+                            >cloud_upload</i>
+                            <p className="grey-text text-darken-3" style={{ margin: 5, fontWeight: 500 }}>
+                                Click/Drag to upload Files
+                            </p>
+                        </div>
                     </div>
+                    <span className="red-text">{errors}</span>
+                    <ul className="left-align">{files}</ul>
                 </div>
                 <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                     <button
                         style={{
-                            borderRadius: "0px",
+                            borderRadius: "3px",
                             letterSpacing: "1.5px",
-                            marginTop: "1rem"
                         }}
                         className="btn btn-small waves-effect waves-light hoverable grey darken-3">
                         Upload<i className="material-icons right">file_upload</i>

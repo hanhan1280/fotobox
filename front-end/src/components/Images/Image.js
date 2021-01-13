@@ -3,7 +3,7 @@ import { getImages, deleteImage } from '../../actions/imageUtils';
 import { ErrorContext } from "../../contexts/ErrorContext";
 
 const Images = (props) => {
-    const { imgList, setImgList } = props;
+    const { imgList, setImgList, deletable } = props;
     const { setError } = useContext(ErrorContext);
 
     const onDelete = async (imageId) => {
@@ -28,10 +28,12 @@ const Images = (props) => {
                                     />
                                 </div>
                                 <div style={{ position: "absolute", top: 5, right: 5 }}>
-                                    <button type="submit" className="btn-floating btn-small transparent"
-                                        onClick={() => onDelete(image._id)}>
-                                        <i className="white-text material-icons">close</i>
-                                    </button>
+                                    {
+                                        deletable ? <button type="submit" className="btn-floating btn-small transparent"
+                                            onClick={() => onDelete(image._id)}>
+                                            <i className="white-text material-icons">close</i>
+                                        </button> : null
+                                    }
                                 </div>
                             </div>
                         </div>

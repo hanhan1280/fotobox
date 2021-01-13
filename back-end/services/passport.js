@@ -17,7 +17,7 @@ passport.use(
             try {
                 const name = req.body.name;
                 const used = await User.findOne({ "email": email }).exec();
-                if (used) return done(null, false);
+                if (used) return done(null, false, { email: "Email already exists" });
                 const user = await User.create({ name, email, password });
                 let hash = await bcrypt.hash(user.password, 10);
                 user.password = hash;
@@ -41,11 +41,11 @@ passport.use(
             try {
                 const user = await User.findOne({ "email": email }).exec();
                 if (!user) {
-                    return done(null, false);
+                    return done(null, false, { emailnotfound: "Email not found" });
                 }
                 const validate = await bcrypt.compare(password, user.password);
                 if (!validate) {
-                    return done(null, false);
+                    return done(null, false, { passwordincorrect: "Password incorrect" });
                 }
                 return done(null, user, { message: 'Logged in Successfully' });
             } catch (error) {
