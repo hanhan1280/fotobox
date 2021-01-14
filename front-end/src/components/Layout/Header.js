@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <div className="navbar-fixed">
             <nav className="z-depth-0">
-                <div className="nav-wrapper grey lighten-5">
+                <div className="nav-wrapper white lighten-5">
                     <Link
                         to="/"
                         style={{

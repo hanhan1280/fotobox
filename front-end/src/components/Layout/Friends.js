@@ -70,7 +70,7 @@ const Friends = () => {
                                             <div onClick={() => goTo(user._id, follow)} className="circle valign-wrapper center-align" style={{ zIndex: 5, position: "absolute", width: 40, height: 40, backgroundColor: "#42424280" }}>
                                                 <p className="white-text" style={{ width: 40}}>+{user.imageLen}</p>
                                             </div>
-                                            <img className="circle" style={{ width: 40, height: 40, objectFit: "cover", cursor: "pointer", marginRight: 5 }} src={user.profile.url} alt="" />
+                                            <img className="circle" style={{ width: 40, height: 40, objectFit: "cover", cursor: "pointer", marginRight: 5 }} src={user.profile?user.profile.url:""} alt="" />
                                         </div>
                                     </Tooltip>
                                     <p className="grey-text text-darken-3"><b>{user.name}</b></p>
