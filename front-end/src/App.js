@@ -9,6 +9,7 @@ import Friends from "./components/Layout/Friends";
 import Login from "./components/Login/Login";
 import SignUp from "./components/Login/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
+import Header from "./components/Layout/Header";
 
 import { setCurrentUser, setTokenAxios, logoutUser } from "./actions/authUtils";
 import { UserContext } from "./contexts/UserContext";
@@ -35,10 +36,11 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Header />
         <Route exact path="/" component={Landing} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={Login} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />        
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/dashboard/:userId" component={FriendDashboard} />
         <PrivateRoute exact path="/friends" component={Friends} />
       </div>

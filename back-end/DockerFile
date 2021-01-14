@@ -1,4 +1,4 @@
-# Dockerfile for Node Server
+#  Dockerfile for Node Express Backend
 
 FROM node:10.16-alpine
 

@@ -52,6 +52,7 @@ const deleteImage = async (req, res) => {
   try {
     if (req.user) {
       await User.updateOne({ _id: req.user._id }, { $pullAll: { images: [req.params.imageid] } })
+      let user = await User.findById(req.user._id);
       let image = await Image.findById(req.params.imageid);
       await cloudinary.uploader.destroy(image.cloudinaryId);
       await Image.findByIdAndDelete(req.params.imageid);
@@ -131,16 +132,20 @@ const getAllUsers = async (req, res) => {
   try {
     if (req.user) {
       let users = await User.find({ "_id": { $ne: req.user._id } });
-      let usersAll = [];
-      users.map(user => {
-        usersAll.push({
+      Promise.all(users.map(user => {
+        return Image.findById(user.images[0]).then(profile => ({
           _id: user._id,
           name: user.name,
           email: user.email,
           imageLen: user.images.length,
-        })
+          profile: profile
+        }))
+      })).then(usersAll => {
+        return res.status(200).json({ usersAll });
       })
-      return res.status(200).json({ usersAll });
+        .catch(err => {
+          console.log(err);
+        })
     }
   } catch (error) {
     console.error(error);

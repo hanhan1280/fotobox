@@ -5,7 +5,7 @@ import { GET_ERRORS } from "./types";
 export const getAllUsers = async (setError) => {
     try {
         let { data } = await axios.get("/api/user/all");
-        return data.usersAll;
+        if (data) return data.usersAll;
     } catch (err) {
         setError({
             type: GET_ERRORS,
@@ -17,7 +17,7 @@ export const getAllUsers = async (setError) => {
 export const addFriend = async (userId, setError) => {
     try {
         let { data } = await axios.post(`/api/user/add/${userId}`);
-        console.log(data.msg);
+        if (data) console.log(data.msg);
     } catch (err) {
         setError({
             type: GET_ERRORS,
@@ -29,7 +29,7 @@ export const addFriend = async (userId, setError) => {
 export const deleteFriend = async (userId, setError) => {
     try {
         let { data } = await axios.delete(`/api/user/delete/${userId}`);
-        console.log(data.msg);
+        if (data) console.log(data.msg);
     } catch (err) {
         setError({
             type: GET_ERRORS,

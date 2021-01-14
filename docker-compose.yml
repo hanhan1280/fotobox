@@ -2,12 +2,8 @@ version: "3.7"
 
 services:
   server:
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
-    image: shopify-server
+    build: ./back-end
     container_name: shopify-server
-    command: /usr/src/app/node_modules/.bin/nodemon index.js
     volumes:
       - ./back-end/:/usr/src/app
       - /usr/src/app/node_modules
@@ -16,25 +12,21 @@ services:
     depends_on:
       - mongo
     env_file: ./back-end/.env
-    environment:
-      - NODE_ENV=development
     networks:
       - app-network
   mongo:
     image: mongo
     volumes:
       - data-volume:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=shopify
     ports:
       - "27017:27017"
     networks:
       - app-network
   client:
-    build:
-      context: ./front-end
-      dockerfile: Dockerfile
-    image: shopify-client
+    build: ./front-end
     container_name: shopify-client
-    command: npm start
     volumes:
       - ./front-end/:/usr/app
       - /usr/app/node_modules
@@ -44,12 +36,11 @@ services:
       - "3000:3000"
     networks:
       - app-network
-
 networks:
   app-network:
     driver: bridge
-
 volumes:
   data-volume:
   node_modules:
   web-root:
+    driver: local

@@ -19,7 +19,7 @@ const FriendDashboard = props => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 40 }}>
+            <div className="row" style={{ marginTop: 20 }}>
                 <div className="landing-copy col s12 center-align">
                     <h4>
                         <b>This is</b> {friend.name}'s gallery
@@ -34,7 +34,7 @@ const FriendDashboard = props => {
                     }}>
                         <i className="material-icons left">keyboard_backspace</i> To Dashboard
                     </Link>
-                    <Link to="/friends" className="btn-flat waves-effect" style={{
+                    <Link to="/friends" className="btn-flat waves-effect btn-large white" style={{
                         borderRadius: "3px",
                         letterSpacing: "1.5px",
                         marginTop: "1rem"

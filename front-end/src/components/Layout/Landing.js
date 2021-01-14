@@ -1,12 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LandingImg from "../../assets/vector_art.jpg";
 
 const Landing = () => {
     return (
-        <div style={{ height: "75vh" }} className="container valign-wrapper">
+        <div style={{ height: "75vh"}} className="container valign-wrapper">
             <div className="row">
+                <img src={LandingImg} className="responsive-img" style={{
+                    position:"absolute",
+                    bottom:0,
+                    right:0,
+                    zIndex:-1,
+                    width: "75vh"
+                }}/>
                 <div className="col s12 center-align">
-                    <h2><span style={{ fontFamily: "monospace" }}>photobox</span></h2>
                     <h4>
                         <b>Upload</b> Images Here{" "}
                     </h4>
@@ -26,7 +33,7 @@ const Landing = () => {
                         
                     <i className="material-icons right">arrow_forward</i>
                         </Link>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>

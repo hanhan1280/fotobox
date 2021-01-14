@@ -2,7 +2,7 @@ import React, { useContext, useState, useMemo } from "react";
 import { ErrorContext } from "../../contexts/ErrorContext";
 import { useDropzone } from "react-dropzone";
 import { uploadImages, getImages } from '../../actions/imageUtils';
-
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const baseStyle = {
@@ -15,6 +15,7 @@ const baseStyle = {
     borderColor: '#eeeeee',
     borderStyle: 'dashed',
     backgroundColor: '#fafafa',
+    cursor: "pointer",
     color: '#e0e0e0',
     outline: 'none',
     transition: '.24s ease-in-out'
@@ -51,10 +52,12 @@ const Upload = props => {
         setImages(images.filter((img, i) => (i !== key)));
     }
 
-    const files = images.map((image,i) => (
+    const files = images.map((image, i) => (
         <li key={image.path} className="valign-wrapper" style={{ marginLeft: 25, flexDirection: "row" }}>
             <i className="material-icons grey-text text-lighten-1">image</i>
-            <span onClick={()=>remove(i)} className="grey-text text-darken-3" style={{ margin: "5px", fontWeight: 500 }}>{image.path}</span>
+            <Tooltip title="Delete Image" aria-label="delete" placement="top-start" arrow>
+                <span onClick={() => remove(i)} className="grey-text text-darken-3" style={{ margin: "5px", fontWeight: 500 }}>{image.path}</span>
+            </Tooltip>
             {(image.size / 1048576).toFixed(2)} mb
         </li>
     ));

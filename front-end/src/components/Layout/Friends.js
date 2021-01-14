@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { getAllUsers, addFriend, getFriends, deleteFriend } from "../../actions/userUtils";
 import { ErrorContext } from "../../contexts/ErrorContext";
 import { Link, useHistory } from "react-router-dom";
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Friends = () => {
     const { setError } = useContext(ErrorContext);
@@ -37,7 +38,7 @@ const Friends = () => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 40 }}>
+            <div className="row" style={{ marginTop: 20 }}>
                 <h4>
                     Find <b>Friends</b> Here
                 </h4>
@@ -64,16 +65,21 @@ const Friends = () => {
                         return (
                             <div className="card col s12" key={i}>
                                 <div className="card-content">
-                                    <Link onClick={()=>goTo(user._id, follow)} className="grey-text text-darken-3" style={{ marginTop: 0, display: "block" }}>
-                                        <i className="material-icons left">subdirectory_arrow_right</i>
-                                        <b>{user.name}</b>
-                                    </Link>
-                                    <p className="grey-text text-darken-3" style={{ display: "inline-block" }}>{user.email}</p>
+                                    <Tooltip title={follow ? 'Go to profile' : 'Follow to check out photos'} aria-label="goto" placement="left-start" arrow>
+                                        <div className="left circle hoverable" style={{ cursor: "pointer", width: 40, height: 40, position: "relative", marginRight: 10 }}>
+                                            <div onClick={() => goTo(user._id, follow)} className="circle valign-wrapper center-align" style={{ zIndex: 5, position: "absolute", width: 40, height: 40, backgroundColor: "#42424280" }}>
+                                                <p className="white-text" style={{ width: 40}}>+{user.imageLen}</p>
+                                            </div>
+                                            <img className="circle" style={{ width: 40, height: 40, objectFit: "cover", cursor: "pointer", marginRight: 5 }} src={user.profile.url} alt="" />
+                                        </div>
+                                    </Tooltip>
+                                    <p className="grey-text text-darken-3"><b>{user.name}</b></p>
+                                    <p className="blue-text text-lighten-1" style={{ display: "inline-block" }}>@{user.email}</p>
                                     <button onClick={() => onAddFriend(user._id, follow)}
                                         style={{
                                             zIndex: 5,
                                         }}
-                                        className={`btn-flat btn-small ${!follow ? 'blue  accent-3' : 'red accent-2'} white-text right`}>
+                                        className={`btn-flat btn-small ${!follow ? 'blue accent-3' : 'red accent-2'} white-text right`}>
                                         {follow ? "remove Friend" : "add Friend"}
                                         {follow ? null : <i className="white-text material-icons right">group_add</i>}
                                     </button>
@@ -90,7 +96,7 @@ const Friends = () => {
                             marginTop: "1rem"
                         }}
                         to="/dashboard"
-                        className="btn-flat waves-effect"><i className="material-icons left">keyboard_backspace</i>
+                        className="btn-flat waves-effect btn-large white"><i className="material-icons left">keyboard_backspace</i>
                             Back to Dashboard
                         </Link>
                 </div>

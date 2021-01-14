@@ -5,7 +5,7 @@ import { GET_ERRORS } from "./types";
 export const getImages = async (setError) => {
     try {
         let { data } = await axios.get("/api/images");
-        return data.images;
+        if (data) return data.images;
     } catch (err) {
         setError({
             type: GET_ERRORS,
@@ -17,7 +17,7 @@ export const getImages = async (setError) => {
 export const uploadImages = async (imageData, setError) => {
     try {
         let { data } = await axios.post("/api/upload", imageData);
-        console.log(data.msg);
+        if (data) console.log(data.msg);
     } catch (err) {
         setError({
             type: GET_ERRORS,
