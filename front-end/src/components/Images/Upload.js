@@ -114,9 +114,11 @@ const Upload = props => {
                         style={{
                             borderRadius: "3px",
                             letterSpacing: "1.5px",
+                            border: "#424242  solid 2px",
                         }}
-                        className="btn btn-small waves-effect waves-light hoverable grey darken-3">
-                        Upload<i className="material-icons right">file_upload</i>
+                        className="btn-flat waves-effect waves-red
+                        grey-text text-darken-3 transparent">
+                        <b>Upload</b><i className="material-icons right">file_upload</i>
                     </button>
                 </div>
             </form>

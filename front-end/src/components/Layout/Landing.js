@@ -5,9 +5,9 @@ import LandingImg from "../../assets/vector_art.png";
 const Landing = () => {
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: "15vh"}}>
-                <div className="col s12 m12 l4 center-align"  style={{ marginTop: 50}}>
-                    <h3 style={{textShadow: "2px 3px 5px rgba(0,0,0,0.3)"}}>
+            <div className="row" style={{ marginTop: "15vh" }}>
+                <div className="col s12 m12 l5 center-align" style={{ marginTop: 50 }}>
+                    <h3 style={{ textShadow: "2px 3px 5px rgba(0,0,0,0.2)" }}>
                         <b>Upload</b> Images Here{" "}
                     </h3>
                     <p className="flow-text grey-text text-darken-1">
@@ -21,17 +21,18 @@ const Landing = () => {
                                 borderRadius: "3px",
                                 letterSpacing: "1.5px",
                                 marginTop: 25,
-                                marginBottom: 25
+                                marginBottom: 25,
+                                border: "#424242 solid 2px",
                             }}
-                            className="btn btn-large waves-effect waves-light hoverable grey darken-3"
-                        > Get Started
-                        
-                    <i className="material-icons right">arrow_forward</i>
+                            className="btn-flat btn-large waves-effect waves-red
+                            grey-text text-darken-3 transparent"
+                        > <b>Get Started</b>
+                            <i className="material-icons right">arrow_forward</i>
                         </Link>
-                    </div>  
+                    </div>
                 </div>
-                <div className="col s12 m12 l7 offset-l1">
-                    <img src={LandingImg} className="responsive-img"/>
+                <div className="col s12 m12 l7">
+                    <img src={LandingImg} className="responsive-img" alt="" />
                 </div>
             </div>
         </div>

@@ -131,18 +131,23 @@ const rmFriends = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     if (req.user) {
+      let search = req.params.search;
       let users = await User.find({ "_id": { $ne: req.user._id } });
-      Promise.all(users.map(user => {
-        return Image.findById(user.images[0]).then(profile => ({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          imageLen: user.images.length,
-          profile: profile
-        }))
-      })).then(usersAll => {
-        return res.status(200).json({ usersAll });
-      })
+      Promise.all(users.filter(user => {
+        if ((user.name.toLowerCase().search(search.toLowerCase()) !== -1 || user.email.toLowerCase().search(search.toLowerCase()) !== -1)) {
+          return user;
+        }
+      }).map(user => {
+          return Image.findById(user.images[0]).then(profile => ({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            imageLen: user.images.length,
+            profile: profile
+          }))
+        })).then(usersAll => {
+          return res.status(200).json({ usersAll });
+        })
         .catch(err => {
           console.log(err);
         })

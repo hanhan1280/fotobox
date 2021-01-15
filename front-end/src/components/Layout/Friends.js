@@ -11,10 +11,16 @@ const Friends = () => {
     const [search, setSearch] = useState("");
     const history = useHistory();
 
+
     useEffect(() => {
-        getAllUsers(setError).then(users => setAllUsers(users));
         getFriends(setError).then(users => setAllFriends(users)).catch(err => console.log(err));
     }, [setError]);
+
+    useEffect(() => {
+        if (search && search.length >= 3)
+            getAllUsers(search, setError).then(users => setAllUsers(users)).catch(err => console.log(err));
+    }, [allUsers, setError, search])
+
 
     const onAddFriend = async (userId, follow) => {
         if (follow) {
@@ -54,13 +60,7 @@ const Friends = () => {
                     <label htmlFor="search">Search Friends</label>
                 </div>
                 {allUsers ?
-                    allUsers.filter(user => {
-                        if (search && (user.name.search(search) !== -1 || user.email.search(search) !== -1)) {
-                            return user;
-                        }
-                        else if (!search) return user;
-                        return null;
-                    }).map((user, i) => {
+                    allUsers.map((user, i) => {
                         const follow = isFollower(user._id);
                         return (
                             <div className="card col s12" key={i}>
@@ -68,9 +68,9 @@ const Friends = () => {
                                     <Tooltip title={follow ? 'Go to profile' : 'Follow to check out photos'} aria-label="goto" placement="left-start" arrow>
                                         <div className="left circle hoverable" style={{ cursor: "pointer", width: 40, height: 40, position: "relative", marginRight: 10 }}>
                                             <div onClick={() => goTo(user._id, follow)} className="circle valign-wrapper center-align" style={{ zIndex: 5, position: "absolute", width: 40, height: 40, backgroundColor: "#42424280" }}>
-                                                <p className="white-text" style={{ width: 40}}>+{user.imageLen}</p>
+                                                <p className="white-text" style={{ width: 40 }}>+{user.imageLen}</p>
                                             </div>
-                                            <img className="circle" style={{ width: 40, height: 40, objectFit: "cover", cursor: "pointer", marginRight: 5 }} src={user.profile?user.profile.url:""} alt="" />
+                                            <img className="circle" style={{ width: 40, height: 40, objectFit: "cover", cursor: "pointer", marginRight: 5 }} src={user.profile ? user.profile.url : "https://via.placeholder.com/40"} alt="" />
                                         </div>
                                     </Tooltip>
                                     <p className="grey-text text-darken-3"><b>{user.name}</b></p>

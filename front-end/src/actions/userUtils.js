@@ -2,10 +2,12 @@ import axios from "axios";
 
 import { GET_ERRORS } from "./types";
 
-export const getAllUsers = async (setError) => {
+export const getAllUsers = async (search, setError) => {
     try {
-        let { data } = await axios.get("/api/user/all");
-        if (data) return data.usersAll;
+        let { data } = await axios.get(`/api/user/all/${search}`);
+        if (data) {
+            return data.usersAll;
+        }
     } catch (err) {
         setError({
             type: GET_ERRORS,
