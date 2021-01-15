@@ -36,6 +36,14 @@ Compose with Docker:
 
 `docker-compose up`  
 
+## Usage
+
+The app currently consists of a landing page to redirect to both a signup or login page. Users can then create an account, or use an existing account to start uploading images. The image uploader uses a simple dropzone component to drag/drop files or insert files from the file explorer.
+
+
 ## Reflection
 
-  - further features for following requests, liking photos, copying photos to ones gallery, creating photo collections
+  - Capacity for accepting following requests
+  - Creating liked/saved photos
+  - Copying photos to ones gallery
+  - Creating collections of photos
