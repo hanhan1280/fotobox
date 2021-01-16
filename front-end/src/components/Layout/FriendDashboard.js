@@ -19,28 +19,14 @@ const FriendDashboard = props => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 20 }}>
+            <div className="row" style={{ marginTop: 40 }}>
                 <div className="landing-copy col s12 center-align">
                     <h4>
                         <b>This is</b> {friend.name}'s gallery
                     </h4>
                     <div className="row">
-                        <ImageList imgList={imgList} setImgList={setImgList} deletable={false}/>
-                    </div>                    
-                    <Link to="/dashboard" className="btn-flat btn-large white waves-effect" style={{
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}>
-                        <i className="material-icons left">keyboard_backspace</i> To Dashboard
-                    </Link>
-                    <Link to="/friends" className="btn-flat waves-effect btn-large white" style={{
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}> Back to friends
-                            <i className="material-icons right">keyboard_tab</i>
-                    </Link>
+                        <ImageList imgList={imgList} setImgList={setImgList} deletable={false} />
+                    </div>
                 </div>
             </div >
         </div >

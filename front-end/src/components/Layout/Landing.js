@@ -5,7 +5,7 @@ import LandingImg from "../../assets/vector_art.png";
 const Landing = () => {
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: "15vh" }}>
+            <div className="row" style={{ marginTop: "20vh" }}>
                 <div className="col s12 m12 l5 center-align" style={{ marginTop: 50 }}>
                     <h3 style={{ textShadow: "2px 3px 5px rgba(0,0,0,0.2)" }}>
                         <b>Upload</b> Images Here{" "}
@@ -16,7 +16,7 @@ const Landing = () => {
                     <br />
                     <div className="col s12">
                         <Link
-                            to="/login"
+                            to="/signup"
                             style={{
                                 borderRadius: "3px",
                                 letterSpacing: "1.5px",

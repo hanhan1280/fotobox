@@ -44,7 +44,7 @@ const Friends = () => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 20 }}>
+            <div className="row" style={{ marginTop: 40 }}>
                 <h4>
                     Find <b>Friends</b> Here
                 </h4>
@@ -88,18 +88,6 @@ const Friends = () => {
                         )
                     }) : null
                 }
-                <div className="col s12 center-align">
-                    <Link
-                        style={{
-                            borderRadius: "3px",
-                            letterSpacing: "1.5px",
-                            marginTop: "1rem"
-                        }}
-                        to="/dashboard"
-                        className="btn-flat waves-effect btn-large white"><i className="material-icons left">keyboard_backspace</i>
-                            Back to Dashboard
-                        </Link>
-                </div>
             </div>
         </div>
 
