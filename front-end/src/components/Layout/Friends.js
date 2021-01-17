@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { getAllUsers, addFriend, getFriends, deleteFriend } from "../../actions/userUtils";
 import { ErrorContext } from "../../contexts/ErrorContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 
 const Friends = () => {
@@ -44,7 +44,7 @@ const Friends = () => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 40 }}>
+            <div className="row" style={{ marginTop: 64 }}>
                 <h4>
                     Find <b>Friends</b> Here
                 </h4>

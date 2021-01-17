@@ -82,13 +82,14 @@ const Upload = props => {
 
     const onUpload = async e => {
         e.preventDefault();
+        if (images.length === 0) return;
         const formData = new FormData();
         images.forEach((file, i) => {
             formData.append("picture", file, file.name);
             formData.append(`desc${i}`, file.name);
-        });
-        await uploadImages(formData, setError);
+        });        
         setImages([]);
+        await uploadImages(formData, setError);
         getImages(setError).then(imgs => setImgList(imgs));
     }
 

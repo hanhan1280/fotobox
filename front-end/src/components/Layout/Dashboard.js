@@ -17,7 +17,7 @@ const Dashboard = () => {
 
     return (
         <div className="container valign-wrapper">
-            <div className="row" style={{ marginTop: 40 }}>
+            <div className="row" style={{ marginTop: 64 }}>
                 <div className="landing-copy col s12 center-align">
                     <h4>
                         <b className="grey-text text-darken-3">Hey there,</b> {auth.user.name}
