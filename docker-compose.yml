@@ -36,6 +36,9 @@ services:
       - /usr/app/node_modules
     depends_on:
       - server
+    environment:
+      - PORT=80
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
     ports:
       - "80:80"
     networks:
