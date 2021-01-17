@@ -10,7 +10,7 @@ This project is currently in development. Limited features available for friend 
 
 ## Project Screen Shot(s)
 
-...
+![Systems Design](assets/snapshot.PNG)
 
 ## Installation and Setup Instructions
 
