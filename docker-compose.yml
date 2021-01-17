@@ -2,7 +2,9 @@ version: "3.7"
 
 services:
   server:
-    build: ./back-end
+    build: 
+      context: ./back-end
+      dockerfile: Dockerfile
     container_name: shopify-server
     volumes:
       - ./back-end/:/usr/src/app
@@ -25,7 +27,9 @@ services:
     networks:
       - app-network
   client:
-    build: ./front-end
+    build: 
+      context: ./front-end
+      dockerfile: Dockerfile
     container_name: shopify-client
     volumes:
       - ./front-end/:/usr/app
